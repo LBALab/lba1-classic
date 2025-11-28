@@ -3,8 +3,8 @@
 
 */
 
-#include 	"\projet\lib386\lib_sys\adeline.h"
-#include 	"\projet\lib386\lib_sys\lib_sys.h"
+#include 	"ADELINE.H"
+#include 	"LIB_SYS.H"
 
 #include <i86.h>
 #include <dos.h>

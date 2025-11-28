@@ -1,6 +1,4 @@
-#include 	"c_extern.h"
-
-#include	<process.h>
+#include 	"C_EXTERN..H"
 
 extern	char	*Version ;
 
@@ -1240,7 +1238,7 @@ void	main( int argc, UBYTE *argv[] )
 	ULONG	memory ;
 	ULONG	memotimer ;
 
-	_harderr_( Critical_Error_Handler )	;
+	// _harderr_( Critical_Error_Handler )	;
 
 #ifdef	DEBUG_TOOLS
 	MemoMemory = (ULONG)Malloc( -1 ) ;	// memory at start

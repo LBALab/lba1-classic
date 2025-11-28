@@ -1,5 +1,5 @@
-#include "\projet\lib386\lib_sys\adeline.h"
-#include "\projet\lib386\lib_sys\lib_sys.h"
+#include "LIB_SYS/ADELINE.H"
+#include "LIB_SYS/LIB_SYS.H"
 
 #pragma	library	("\gussdk21\libs\ultra0wc.lib");
 

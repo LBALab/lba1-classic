@@ -139,7 +139,7 @@ wave_a.asm						     Page 1 - 1
 				----------------------------*
 
 						.386
-						jumps
+				
 
 						.model  FLAT, SYSCALL
 
@@ -559,7 +559,7 @@ wave_a.asm						     Page 1 - 1
 
 				endif
 
-				public	Nolanguage	PlayRate
+				public	PlayRate
 
  25A0 = 25A0			ListVars		equ	$
 
@@ -618,7 +618,7 @@ wave_a.asm						     Page 1 - 1
  25B0 0000000D			INT_number              dd      0Dh		
 				; By default 0Dh
 
-				public	Nolanguage	BufferHalf
+				public	BufferHalf
 
  25B4 00000000			BufferHalf              dd      ?
 
@@ -645,8 +645,8 @@ wave_a.asm						     Page 1 - 1
  25E0 00000000			save_4                  dd      ?
 
 
-				public	Nolanguage	BUFFER_DMA
-				public	Nolanguage	CURRENT_BUFFER
+				public	BUFFER_DMA
+				public	CURRENT_BUFFER
 
 
 				ifdef   RAM_CARD
@@ -982,10 +982,10 @@ wave_a.asm						     Page 1 - 1
 				----------------------------*
 
 				ifdef	GUS
-						PUBLIC	Nolanguage	UpdateBu
+						public	UpdateBu
 				ffer
-						PUBLIC	Nolanguage	DoUpdate
-						PUBLIC	Nolanguage	Critical
+						public	DoUpdate
+						public	Critical
 				endif
 
 				;*----------------------------------------------
@@ -5735,17 +5735,17 @@ wave_a.asm						     Page 1 - 1
 
 				ifdef	GUS
 
-				extrn	Nolanguage	resetcard:PROC
+				extrn	resetcard:PROC
 
 				;*----------------------------------------------
 				----------------------------*
 
-				extrn	Nolanguage	CloseCard:PROC
+				extrn	CloseCard:PROC
 
 				;*----------------------------------------------
 				----------------------------*
 
-				extrn	Nolanguage	StartDMACard:PROC
+				extrn	StartDMACard:PROC
 
 				endif
 

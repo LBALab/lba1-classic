@@ -6,13 +6,13 @@
 ;*--------------------------------------------------------------------------*
 
 		.386
-		jumps
+
 
 		.model  SMALL, SYSCALL
 
 		.DATA
 
-		PUBLIC	NoLanguage	listfcts
+		public	listfcts
 
 listfcts		dd	offset	Vesafcts
 
@@ -21,8 +21,8 @@ Vesafcts		dd	offset	SvgaInitVesa
 
 		.CODE
 
-		PUBLIC	NoLanguage	SvgaInit
-		PUBLIC	NoLanguage	SvgaBank
+		public	SvgaInit
+		public	SvgaBank
 
 ;----------------------------------------------------------------------------
 

@@ -1,17 +1,17 @@
 
 		.386p
-		jumps
 
-		.model SMALL, C
+
+		.model SMALL, SYSCALL
 
 		.data
 
-		extrn	NoLanguage P_SinTab:WORD
+		extrn P_SinTab:WORD
 
 
 		.code
 
-		public	NoLanguage	Balance
+		public	Balance
 
 
 Balance		PROC uses ebx,\

@@ -6,23 +6,23 @@
 ;*--------------------------------------------------------------------------*
 
 		.386
-		jumps
+
 
 		.model  SMALL, SYSCALL
 
 		.DATA
 
-		PUBLIC	NoLanguage	Mixer_listfcts
-		PUBLIC	NoLanguage	Mixer_Driver_Enable
+		public	Mixer_listfcts
+		public	Mixer_Driver_Enable
 
 Mixer_listfcts		dd	0
 Mixer_Driver_Enable	dd	0
 
 		.CODE
 
-		PUBLIC	NoLanguage	MixerAskVars
-		PUBLIC	NoLanguage	MixerChangeVolume
-		PUBLIC	NoLanguage	MixerGetVolume
+		public	MixerAskVars
+		public	MixerChangeVolume
+		public	MixerGetVolume
 
 ;----------------------------------------------------------------------------
 ;----------------------------------------------------------------------------

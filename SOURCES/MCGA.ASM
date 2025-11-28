@@ -6,14 +6,13 @@
 ;----------------------------------------------------------------------------
 				.386P
 				.model SMALL, SYSCALL
-	JUMPS
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 ;----------------------------------------------------------------------------
-			public	NoLanguage	Mcga_Cls
-			public	NoLanguage	Mcga_Flip
+			public	Mcga_Cls
+			public	Mcga_Flip
 
 			.code
 

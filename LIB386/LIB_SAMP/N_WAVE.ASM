@@ -22,12 +22,19 @@ ENDIF
 ;*--------------------------------------------------------------------------*
 
 		.386
-		jumps
 
 		.model  FLAT, C
 
 		.CODE
 
+
+;*--------------------------------------------------------------------------*
+; Forward declarations for procedures used before they are defined
+;*--------------------------------------------------------------------------*
+
+AckIrq		PROTO
+ResetCard	PROTO
+CloseCard	PROTO
 
 ;*--------------------------------------------------------------------------*
 
@@ -73,7 +80,7 @@ IFDEF	SURROUND
 		db	' Surround'
 ENDIF
 
-		db 	' playback, Version ß2.00, ', ??date, 13, 10
+		db 	' playback, Version 2.00.', 13, 10
 IFDEF	GUS
 		db	'Copyright (C) 1991,1992 Miles Design, Inc.', 0Dh, 0Ah
 		db	'Copyright (C) 1993,1994 Advanced Gravis Computer '
@@ -123,7 +130,7 @@ ListFuncs	dd	offset	InitCard
 ADDRESS                 equ     0
 FRACT                   equ     4
 LEFT                    equ     8
-REPEAT                  equ     12
+C_REPEAT                equ     12
 INCR                    equ     14
 SON                     equ     16
 HANDLE                  equ     20
@@ -367,7 +374,7 @@ else
 
 endif
 
-public	Nolanguage	PlayRate
+public PlayRate
 
 ListVars		equ	$
 
@@ -408,7 +415,7 @@ endif
 
 INT_number              dd      0Dh		; By default 0Dh
 
-public	Nolanguage	BufferHalf
+public BufferHalf
 
 BufferHalf              dd      ?
 
@@ -434,8 +441,8 @@ save_3                  dd      ?
 save_4                  dd      ?
 
 
-public	Nolanguage	BUFFER_DMA
-public	Nolanguage	CURRENT_BUFFER
+public BUFFER_DMA
+public CURRENT_BUFFER
 
 
 ifdef   RAM_CARD
@@ -683,7 +690,7 @@ endif
 ;*--------------------------------------------------------------------------*
 
 ifdef	GUS
-		PUBLIC	Nolanguage	UpdateBuffer
+		public UpdateBuffer
 endif
 
 UpdateBuffer    PROC
@@ -1021,7 +1028,7 @@ noadjust0:
 
 		dec     ax                              ; readjust size
 
-		dec     word ptr[ebx+REPEAT]            ; repeat again?
+		dec     word ptr[ebx+C_REPEAT]            ; repeat again?
 		jnz     Reset0				; yes, then reset
 
 		mov     edx, dword ptr[ebx+SON]         ; no, got a son?
@@ -1313,7 +1320,7 @@ noadjust:
 
 		dec     ax                              ; readjust size
 
-		dec     word ptr[ebx+REPEAT]            ; repeat again?
+		dec     word ptr[ebx+C_REPEAT]            ; repeat again?
 		jnz     short Reset                     ; yes, then reset
 
 		mov     edx, dword ptr[ebx+SON]         ; no, got a son?
@@ -1907,7 +1914,7 @@ SearchEnd:	add	edi, STRUCT_SIZE
 		mov     dword ptr[follow], ecx          ; update follow
 		mov     dword ptr[edi+HANDLE], ecx      ; sample handle
 		mov     cx, word ptr[therepeat]
-		mov     word ptr[edi+REPEAT], cx        ; Repeat
+		mov     word ptr[edi+C_REPEAT], cx        ; Repeat
 		mov     dword ptr[edi+LEFT], esi        ; length
 		mov     dword ptr[edi+DLENGTH], esi     ; length
 		mov     eax, dword ptr[save_1]
@@ -3418,15 +3425,15 @@ endif
 
 ifdef	GUS
 
-extrn	Nolanguage	resetcard:PROC
+extrn resetcard:PROC
 
 ;*--------------------------------------------------------------------------*
 
-extrn	Nolanguage	CloseCard:PROC
+extrn CloseCard:PROC
 
 ;*--------------------------------------------------------------------------*
 
-extrn	Nolanguage	StartDMACard:PROC
+extrn StartDMACard:PROC
 
 endif
 

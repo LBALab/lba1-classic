@@ -10,9 +10,9 @@
 
 				.code
 
-			public	NoLanguage	MovMem
-			public	NoLanguage	RazMem
-			public	NoLanguage	CompBuf
+			public	MovMem
+			public	RazMem
+			public	CompBuf
 
 ;----------------------------------------------------------------------------
 MovMem			proc	uses esi edi,\
@@ -55,12 +55,12 @@ CompBuf			proc	uses esi edi,\
 
 			mov	ecx, eax
 			shr	ecx, 2
-			rep	cmpsd
+			repe	cmpsd
 			jne	NoGood
 
 			mov	ecx, eax
 			and	ecx, 3
-			rep	cmpsb
+			repe	cmpsb
 			jne	NoGood
 
 			mov	eax, 1

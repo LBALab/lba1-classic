@@ -3,7 +3,7 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386p
-				jumps
+		
 				.model SMALL, SYSCALL
 
 				.data
@@ -12,8 +12,8 @@
 
 				.code
 
-			public	 NoLanguage	Plot
-			public	 NoLanguage	GetPlot
+			public	Plot
+			public	GetPlot
 
 ;----------------------------------------------------------------------------
 ;			Plot( x, y, coul )

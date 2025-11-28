@@ -5,7 +5,7 @@
 				.data
 ;----------------------------------------------------------------------------
 
-public	NoLanguage	MySortCompFunc
+public	MySortCompFunc
 
 strcmp	proto	SYSCALL
 

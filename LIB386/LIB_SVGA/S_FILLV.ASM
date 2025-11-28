@@ -3,16 +3,16 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model FLAT, SYSCALL
 				.data
 
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
-			extrn	NoLanguage	TabVerticG	:WORD
-			extrn	NoLanguage	TabCoulG	:WORD
-			extrn	NoLanguage	Ymin		:WORD
-			extrn	NoLanguage	Ymax		:WORD
+			extrn	TabVerticG	:WORD
+			extrn	TabCoulG	:WORD
+			extrn	Ymin		:WORD
+			extrn	Ymax		:WORD
 
 ALIGN 4
 
@@ -64,9 +64,9 @@ TabPoly_2	dd	SVGAPolyTriste ;S
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	FillVertic
-			public	NoLanguage	FillVertic_A
-			public	NoLanguage	SetFillDetails
+			public	FillVertic
+			public	FillVertic_A
+			public	SetFillDetails
 
 ;----------------------------------------------------------------------------
 

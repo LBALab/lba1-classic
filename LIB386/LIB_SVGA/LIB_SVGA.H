@@ -1,13 +1,6 @@
 /*-----------------------------------------------------------------------------
 ;                       Extern lib_svga 386
 ;-----------------------------------------------------------------------------*/
-
-#ifdef	WATCOM9
-#pragma library ( "f:\projet\lib386\lib_svga\lb9_svga.lib" );
-#else
-#pragma library ( "f:\projet\lib386\lib_svga\lib_svga.lib" );
-#endif
-
 /*-----------------------------------------------------------------------------*/
 
 #define SVGA_VESA               0	/* VESA compliant board at Adress 0xA0000 */

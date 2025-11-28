@@ -3,17 +3,17 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model SMALL, SYSCALL
 
 				.data
 
-			include	f:\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	CopyBlockIncrust
+			public	CopyBlockIncrust
 
 ;----------------------------------------------------------------------------
 ;			CopyBlockIncrust( x0, y0, x1, y1, *src, xd, yd, *dst )

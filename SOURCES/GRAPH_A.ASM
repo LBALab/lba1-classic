@@ -8,7 +8,7 @@
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
 comment @
 		DWORD	TabOffset[]
@@ -30,8 +30,8 @@ NbPix		dd	0
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	AffGraph
-			public	NoLanguage	GetDxDyGraph
+			public	AffGraph
+			public	GetDxDyGraph
 
 ;----------------------------------------------------------------------------
 AffGraph		proc	uses esi edi ebx ebp,\

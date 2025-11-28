@@ -3,9 +3,9 @@
 			      (c) Adeline 1993
  *──────────────────────────────────────────────────────────────────────────*/
 
-#include "\projet\lib386\lib_sys\adeline.h"
-#include "\projet\lib386\lib_sys\lib_sys.h"
-#include "\projet\lib386\lib_samp\lib_wave.h"
+#include "LIB_SYS/ADELINE.H"
+#include "LIB_SYS/LIB_SYS.H"
+#include "LIB_SAMP/LIB_WAVE.H"
 #include	<stdlib.h>
 #include	<stdio.h>
 #include	<dos.h>

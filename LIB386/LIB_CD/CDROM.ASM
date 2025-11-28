@@ -13,22 +13,22 @@ comment @
 		    (c) Adeline Software International 1994
 @
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-			JUMPS
+	
 			.386P
-			.model SMALL, C
+			.model SMALL, SYSCALL
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			.data
-		public	NoLanguage	LeadOut
-		public	NoLanguage	LowTrack
-		public	NoLanguage	HigTrack
-		public	NoLanguage	BufferData
-		public	NoLanguage	CptTimeOut
-		public	NoLanguage	DriveCDR
+		public	LeadOut
+		public	LowTrack
+		public	HigTrack
+		public	BufferData
+		public	CptTimeOut
+		public	DriveCDR
 
-                public	NoLanguage	FileCD_Start
-		public	NoLanguage	FileCD_Sect
-		public	NoLanguage	FileCD_Size
+                public	FileCD_Start
+		public	FileCD_Sect
+		public	FileCD_Size
 
 TIME_OUT	equ	10
 
@@ -93,30 +93,30 @@ RMI_SS		dw	0
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 			.code
 
-			public	NoLanguage	InitCDR
-			public	NoLanguage	ClearCDR
-			public	NoLanguage	GetCopyrightName
-			public	NoLanguage	Red2Hsg
-			public	NoLanguage	GetLengthTrackCDR
-			public	NoLanguage	StartTrackCDR
-			public	NoLanguage	ResumeCDR
-			public	NoLanguage	EjectCDR
-			public	NoLanguage	CloseTrayCDR
-			public	NoLanguage	LockCDR
-			public	NoLanguage	UnLockCDR
-			public	NoLanguage	StatusCDR
-			public	NoLanguage	GetMusicCDR
-			public	NoLanguage	ResetCDR
-			public	NoLanguage	ControlCDR
-			public	NoLanguage	LocateHeadCDR
-			public	NoLanguage	PlayCDR
-			public	NoLanguage	StopCDR
-			public	NoLanguage	PlayTrackCDR
-			public	NoLanguage	ReadLongCDR
-			public	NoLanguage	GetBitCDR
-			public	NoLanguage	WaitDisk
-;'			public	NoLanguage	TestCDROM
-			public	NoLanguage	GetFileCDR
+			public	InitCDR
+			public	ClearCDR
+			public	GetCopyrightName
+			public	Red2Hsg
+			public	GetLengthTrackCDR
+			public	StartTrackCDR
+			public	ResumeCDR
+			public	EjectCDR
+			public	CloseTrayCDR
+			public	LockCDR
+			public	UnLockCDR
+			public	StatusCDR
+			public	GetMusicCDR
+			public	ResetCDR
+			public	ControlCDR
+			public	LocateHeadCDR
+			public	PlayCDR
+			public	StopCDR
+			public	PlayTrackCDR
+			public	ReadLongCDR
+			public	GetBitCDR
+			public	WaitDisk
+;'			public	TestCDROM
+			public	GetFileCDR
 
 
 ;~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -308,7 +308,7 @@ NoError:
 			mov	edi, nameid
 			mov	ecx, [lennameid]
 
-			rep	cmpsb			;' Compar with Copyright
+			repe	cmpsb			;' Compar with Copyright
 			je	TheGoodOne
 NotGoodOne:
 			call	UnLockCDR

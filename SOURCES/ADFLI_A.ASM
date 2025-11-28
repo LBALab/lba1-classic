@@ -9,17 +9,17 @@
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	DrawFrame
-			public	NoLanguage	UpdateFrame
-			public	NoLanguage	BlackFrame
-			public	NoLanguage	CopyFrame
+			public	DrawFrame
+			public	UpdateFrame
+			public	BlackFrame
+			public	CopyFrame
 
-;			public	NoLanguage	SetPal
-;			public	NoLanguage	CpyPal
+;			public	SetPal
+;			public	CpyPal
 
 ;----------------------------------------------------------------------------
 DrawFrame		proc	uses	esi edi ebx,\

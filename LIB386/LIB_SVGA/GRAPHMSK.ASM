@@ -3,12 +3,12 @@
 ;			      	(c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model SMALL, SYSCALL
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
 comment @
 		DWORD	TabOffset[]
@@ -27,7 +27,7 @@ comment @
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	CalcGraphMsk
+			public	CalcGraphMsk
 
 ;----------------------------------------------------------------------------
 CalcGraphMsk		proc	uses esi edi ebx ebp,\

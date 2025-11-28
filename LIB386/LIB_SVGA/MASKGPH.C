@@ -1,7 +1,7 @@
 
-#include "\projet\lib386\lib_sys\adeline.h"
-#include "\projet\lib386\lib_sys\lib_sys.h"
-#include "\projet\lib386\lib_svga\lib_svga.h"
+#include "LIB_SYS/ADELINE.H"
+#include "LIB_SYS/LIB_SYS.H"
+#include "LIB_SVGA/LIB_SVGA.H"
 
 #include	<stdlib.h>
 #include	<stdio.h>

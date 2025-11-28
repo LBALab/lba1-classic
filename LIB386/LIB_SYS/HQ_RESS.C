@@ -4,9 +4,9 @@
 #include <stdlib.h>
 #include <fcntl.h>
 
-#include "adeline.h"
-#include "lib_sys.h"
-#include "\projet\lib386\lib_samp\lib_wave.h"
+#include "ADELINE.H"
+#include "LIB_SYS.H"
+#include "LIB_SAMP/LIB_WAVE.H"
 
 #define	RECOVER_AREA	500
 
@@ -300,7 +300,7 @@ UWORD	HQR_Del_Bloc( T_HQR_HEADER *header, WORD index )
 
 /*──────────────────────────────────────────────────────────────────────────*/
 
-void	*HQR_Get( T_HQR_HEADER *header, WORD index )
+void	*HQR_Get( T_HQR_HEADER *header, UWORD index )
 {
 	UWORD		n, oldest ;
 	ULONG		time, testtime ;
@@ -487,7 +487,7 @@ UWORD	HQR_Del_Bloc_Sample( T_HQR_HEADER *header, WORD index )
 
 /*──────────────────────────────────────────────────────────────────────────*/
 
-void	*HQR_GetSample( T_HQR_HEADER *header, WORD index )
+void	*HQR_GetSample( T_HQR_HEADER *header, UWORD index )
 {
 	UWORD		n, oldest ;
 	ULONG		time, testtime ;

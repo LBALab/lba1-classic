@@ -1,8 +1,3 @@
-#ifdef	WATCOM9
-#pragma	library	("f:\projet\lib386\lib_samp\lb9_wave.lib");
-#else
-#pragma	library	("f:\projet\lib386\lib_samp\lib_wave.lib");
-#endif
 
 typedef	struct
 	{
@@ -26,7 +21,7 @@ extern	LONG	Wave_Driver_Enable;
 /*									*/
 /*	Returns		: TRUE if ok, FALSE if problems			*/
 /*----------------------------------------------------------------------*/
-LONG	WaveInitDLL( 		char *dlldriver 	) ;
+extern LONG	WaveInitDLL( 		char *dlldriver 	) ;
 
 /*----------------------------------------------------------------------*/
 /*	WaveAskVars	: Get the list of variables needed by the DLL	*/
@@ -41,21 +36,21 @@ LONG	WaveInitDLL( 		char *dlldriver 	) ;
 /*									*/
 /*	Returns		: TRUE if ok, FALSE if problems			*/
 /*----------------------------------------------------------------------*/
-void	WaveAskVars( char ***listidentifier, LONG **ptrvars ) ;
+extern void	WaveAskVars( char ***listidentifier, LONG **ptrvars ) ;
 
 /*----------------------------------------------------------------------*/
 /*	InitWave	: Init the library				*/
 /*									*/
 /*	Returns		: TRUE if ok, FALSE if problems			*/
 /*----------------------------------------------------------------------*/
-ULONG	InitWave(		void			);
+extern ULONG	InitWave(		void			);
 
 /*----------------------------------------------------------------------*/
 /*	ClearWave	: Close the library				*/
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	ClearWave(		void			);
+extern void	ClearWave(		void			);
 
 /*----------------------------------------------------------------------*/
 /*	WavePlay	: Play a Sample					*/
@@ -71,7 +66,7 @@ void	ClearWave(		void			);
 /*									*/
 /*	Returns		: the lib internal handle			*/
 /*----------------------------------------------------------------------*/
-ULONG	WavePlay(		UWORD Handle,
+extern ULONG	WavePlay(		UWORD Handle,
 				UWORD Pitchbend,
 				UWORD Repeat,
 				UBYTE Follow,
@@ -87,7 +82,7 @@ ULONG	WavePlay(		UWORD Handle,
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveGiveInfo0(		ULONG LongHandle,
+extern void	WaveGiveInfo0(		ULONG LongHandle,
 				ULONG Info0		);
 
 /*----------------------------------------------------------------------*/
@@ -95,7 +90,7 @@ void	WaveGiveInfo0(		ULONG LongHandle,
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveStop(		void			);
+extern void	WaveStop(		void			);
 
 /*----------------------------------------------------------------------*/
 /*	WaveStopOne	: Stop one sample				*/
@@ -104,7 +99,7 @@ void	WaveStop(		void			);
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveStopOne(		UWORD Handle		);
+extern void	WaveStopOne(		UWORD Handle		);
 
 /*----------------------------------------------------------------------*/
 /*	WaveStopOneLong	: Stop one sample				*/
@@ -113,7 +108,7 @@ void	WaveStopOne(		UWORD Handle		);
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveStopOneLong(	ULONG LongHandle	);
+extern void	WaveStopOneLong(	ULONG LongHandle	);
 
 /*----------------------------------------------------------------------*/
 /*	WaveInList	: Test if one sample is currently used by	*/
@@ -123,7 +118,7 @@ void	WaveStopOneLong(	ULONG LongHandle	);
 /*									*/
 /*	Returns		: TRUE if used					*/
 /*----------------------------------------------------------------------*/
-int	WaveInList(		UWORD handle		);
+extern int	WaveInList(		UWORD handle		);
 
 /*----------------------------------------------------------------------*/
 /*	WaveGetSnap	: Take a snapshot of all Internal handles and	*/
@@ -136,21 +131,21 @@ int	WaveInList(		UWORD handle		);
 /*	Returns		: The number of samples currently used by the 	*/
 /*			  lib						*/
 /*----------------------------------------------------------------------*/
-int	WaveGetSnap(		void **Buffer		);
+extern int	WaveGetSnap(		void **Buffer		);
 
 /*----------------------------------------------------------------------*/
 /*	WavePause	: Pause all the playing samples			*/
 /*									*/
 /*	Returns		: TRUE if paused					*/
 /*----------------------------------------------------------------------*/
-int	WavePause(		void			);
+extern int	WavePause(		void			);
 
 /*----------------------------------------------------------------------*/
 /*	WaveContinue	: Continue all the playing samples		*/
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveContinue(		void			);
+extern void	WaveContinue(		void			);
 
 /*----------------------------------------------------------------------*/
 /*	WaveSaveState	: Save the internal state of the lib and	*/
@@ -160,7 +155,7 @@ void	WaveContinue(		void			);
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveSaveState(		void			);
+extern void	WaveSaveState(		void			);
 
 /*----------------------------------------------------------------------*/
 /*	WaveRestoreState: Restore the internal state of the lib		*/
@@ -168,7 +163,7 @@ void	WaveSaveState(		void			);
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveRestoreState(	void			);
+extern void	WaveRestoreState(	void			);
 
 /*----------------------------------------------------------------------*/
 /*	WaveChangeVolume: Change the volume of a sample			*/
@@ -179,7 +174,7 @@ void	WaveRestoreState(	void			);
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveChangeVolume(	ULONG longhandle,
+extern void	WaveChangeVolume(	ULONG longhandle,
 				ULONG VolGauche,
 				ULONG VolDroit		);
 
@@ -193,7 +188,7 @@ void	WaveChangeVolume(	ULONG longhandle,
 /*									*/
 /*	Returns		: nothing					*/
 /*----------------------------------------------------------------------*/
-void	WaveMove(		void  *DestAddr,
+extern void	WaveMove(		void  *DestAddr,
 				void  *SrcAddr,
 				ULONG Size		);
 
@@ -203,4 +198,4 @@ void	WaveMove(		void  *DestAddr,
 /*									*/
 /*	Returns		: a pointer (FLAT)				*/
 /*----------------------------------------------------------------------*/
-void	*WaveGetAddr(		void			);
+extern void	*WaveGetAddr(		void			);

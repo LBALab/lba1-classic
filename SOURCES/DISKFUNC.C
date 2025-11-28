@@ -1,4 +1,4 @@
-#include	"c_extern.h"
+#include	"C_EXTERN.H"
 #include	"direct.h"
 
 #include	<dos.h>
@@ -20,14 +20,14 @@ void	GetDiskEnv( UBYTE *progpath )
 {
 	_splitpath( (char*)progpath, ProgDrive, ProgDir, Name, Ext ) ;
 	getcwd( OrgDir, _MAX_DIR ) ;
-	_dos_getdrive( &OrgDrive ) ;
+	_dos_getdrive( (unsigned int *)&OrgDrive ) ;
 }
 
 void	RestoreDiskEnv()
 {
 	ULONG	total ;
 
-	_dos_setdrive( OrgDrive, &total ) ;
+	_dos_setdrive( (unsigned int)OrgDrive, (unsigned int *)&total ) ;
 	chdir( OrgDir ) ;
 }
 
@@ -49,7 +49,7 @@ WORD	LoadScene( WORD numscene )
 
 //	PtrScene = PtrSce = LoadMalloc_HQR( PATH_RESSOURCE"scene.hqr", numscene ) ;
 
-	HQRM_Load( PATH_RESSOURCE"scene.hqr", numscene, &PtrScene ) ;
+	HQRM_Load( PATH_RESSOURCE "scene.hqr", numscene, (void **)&PtrScene ) ;
 	CHECK_MEMORY
 
 	PtrSce = PtrScene ;
@@ -129,7 +129,7 @@ WORD	LoadScene( WORD numscene )
 			if( !(ptrobj->Flags & SPRITE_3D) )
 			{
 
-	HQRM_Load( PATH_RESSOURCE"File3D.hqr", indexfile3d, &ptrobj->PtrFile3D ) ;
+	HQRM_Load( PATH_RESSOURCE "File3D.hqr", indexfile3d, (void **)&ptrobj->PtrFile3D ) ;
 	CHECK_MEMORY
 
 /*				ptrobj->PtrFile3D =

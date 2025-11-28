@@ -3,12 +3,12 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model SMALL, SYSCALL
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
 
 FULL_OPTIMIZE	equ	1
@@ -36,8 +36,8 @@ BufferClip	db	512	dup(?)
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	AffGraph
-			public	NoLanguage	GetDxDyGraph
+			public	AffGraph
+			public	GetDxDyGraph
 
 ;----------------------------------------------------------------------------
 AffGraph		proc	uses esi edi ebx ebp,\

@@ -3,7 +3,7 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 		.386p
-		jumps
+
 		.model FLAT, SYSCALL
 
 		.data
@@ -16,8 +16,8 @@ couleur		dw	00
 
 		.code
 
-		public	NoLanguage	Line
-		public	NoLanguage	Line_A
+		public	Line
+		public	Line_A
 
 ;----------------------------------------------------------------------------
 ;		Line( x0, y0, x1, y1, coul )

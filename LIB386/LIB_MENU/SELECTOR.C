@@ -1,18 +1,16 @@
-#include	"\projet\lib386\lib_sys\adeline.h"
-#include	"\projet\lib386\lib_sys\lib_sys.h"
-#include	"\projet\lib386\lib_svga\lib_svga.h"
-#include	"\projet\lib386\lib_menu\lib_menu.h"
+#include	"LIB_SYS/ADELINE.H"
+#include	"LIB_SYS/LIB_SYS.H"
+#include	"LIB_SVGA/LIB_SVGA.H"
+#include	"LIB_MENU/LIB_MENU.H"
 
 #include	<stdio.h>
 #include	<stdlib.h>
-#include	<sys\types.h>
+#include	<sys/types.h>
 #include	<direct.h>
 #include	<string.h>
 #include	<dos.h>
 
-#ifndef	WATCOM9
 #include	<mem.h>
-#endif
 
 #define	MAX_FILES	500	
 #define	MAX_DIRS	100
@@ -82,12 +80,11 @@ void	DrawListFiles( WORD flag )
 	ShowMouse( 1 ) ;
 }
 
-/*
-int my_sort_function( char **a, char **b)
+
+int MySortCompFunc(void const *a, void const *b)
 {
-	return( strcmp( *a, *b) ) ;
+	return (strcmp(*(const char **)a, *(const char **)b));
 }
-*/
 
 void	ScanFiles( UBYTE *selection, LONG flag )
 {

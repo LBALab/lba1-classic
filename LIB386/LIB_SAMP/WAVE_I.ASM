@@ -6,14 +6,14 @@
 ;*--------------------------------------------------------------------------*
 
 		.386
-		jumps
+
 
 		.model  SMALL, SYSCALL
 
 		.DATA
 
-		PUBLIC	NoLanguage	Wave_listfcts
-		PUBLIC	NoLanguage	Wave_Driver_Enable
+		public	Wave_listfcts
+		public	Wave_Driver_Enable
 
 
 Wave_listfcts		dd	0
@@ -21,25 +21,25 @@ Wave_Driver_Enable	dd	0
 
 		.CODE
 
-		PUBLIC	NoLanguage	_InitCard
-		PUBLIC	NoLanguage	_ClearCard
-		PUBLIC	NoLanguage	WaveAskVars
-		PUBLIC	NoLanguage	WavePlay
-		PUBLIC	NoLanguage	WaveGiveInfo0
-		PUBLIC	NoLanguage	WaveStop
-		PUBLIC	NoLanguage	WaveStopOne
-		PUBLIC	NoLanguage	WaveInList
-		PUBLIC	NoLanguage	WaveGetSnap
-		PUBLIC	NoLanguage	WavePause
-		PUBLIC	NoLanguage	WaveContinue
-		PUBLIC	NoLanguage	WaveSaveState
-		PUBLIC	NoLanguage	WaveRestoreState
-		PUBLIC	NoLanguage	WaveChangeVolume
-		PUBLIC	NoLanguage	WaveGetAddr
-		PUBLIC	NoLanguage	_GetBufferSize
-		PUBLIC	NoLanguage	WaveChangeVolume
-		PUBLIC	NoLanguage	WaveMove
-		PUBLIC	NoLanguage	WaveStopOneLong
+		public	_InitCard
+		public	_ClearCard
+		public	WaveAskVars
+		public	WavePlay
+		public	WaveGiveInfo0
+		public	WaveStop
+		public	WaveStopOne
+		public	WaveInList
+		public	WaveGetSnap
+		public	WavePause
+		public	WaveContinue
+		public	WaveSaveState
+		public	WaveRestoreState
+		public	WaveChangeVolume
+		public	WaveGetAddr
+		public	_GetBufferSize
+		public	WaveChangeVolume
+		public	WaveMove
+		public	WaveStopOneLong
 
 ;----------------------------------------------------------------------------
 ;----------------------------------------------------------------------------

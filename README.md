@@ -1,21 +1,49 @@
-# Little Big Adventure 1 - Engine source code
+# Little Big Adventure 1 - Engine source code - Community
 Little Big Adventure (aka Relentless: Twinsen's Adventure) is an action-adventure game, developed by Adeline Software International in 1994. 
 
 We are releasing this code with preservation in mind, as this piece of work was exceptional for the time and we believe it can be a valuable source of education.
 
 The engine uses Assembly code and was originally compiled with non-open source libraries which have been excluded from the project. 
 
+### Build using CMake and OpenWatcom 2
+
+This project supports building for multiple platforms:
+- **DOS** (32-bit protected mode with DOS/4GW) → `LBAD.EXE` (original assembly) and `LBADC.EXE` (translated C modules)
+- **Windows 9x/NT** (Win32 PE executable) → `LBAW.exe`
+
+#### Quick Start
+
+**Build both platforms at once:**
+```bash
+mkdir build
+cmake -DCMAKE_TOOLCHAIN_FILE=cmake/toolchains/openwatcom.cmake -DBUILD_DOS=ON -DBUILD_DOS_C=ON -DENABLE_CDROM=ON -B build
+cmake --build build --config Debug --target LBAD
+cmake --build build --config Debug --target LBADC
+cmake --build build --config Release
+```
+
+**Test DOS version:**
+```bash
+dosbox-x build/bin/LBAD.EXE
+```
+
+The translated C build lives at `build/bin/LBADC.EXE`, linking against C variants of the core `LIB386` libraries where replacements exist. Disable either flavour with `-DBUILD_DOS=OFF` or `-DBUILD_DOS_C=OFF` when configuring.
+
+**Test Windows version:**
+```bash
+wine build/bin/LBAW.exe
+```
+
+For detailed platform information, see [BUILD_PLATFORMS.md](BUILD_PLATFORMS.md)
+
 ### Licence
-This source code is licensed under the [GNU General Public License](https://github.com/2point21/lba1-classic/blob/main/LICENSE).
+This source code is licensed under the [GNU General Public License](https://github.com/2point21/lba1-classic-community/blob/main/LICENSE).
 
 Please note this license only applies to **Little Big Adventure 1** engine source code. **Little Big Adventure 1** game assets (art, models, textures, audio, etc.) are not open-source and therefore aren't redistributable.
 
 ## How can I contribute ?
-This project is the historic version of the open source project and meant to be kept as it was developed in 1994 !  Pull requests to this repository are **not** accepted.
 
-You can contribute to the community project here : https://github.com/2point21/lba1-classic-community 
-
-You can also help to build the official documentation here : https://github.com/2point21/lba-classic-doc
+Read our [Contribution Guidelines](https://github.com/2point21/lba1-classic-community/blob/main/CONTRIBUTING.md).
 
 ## Links:
 **Official Website:** https://twinsenslittlebigadventure.com/

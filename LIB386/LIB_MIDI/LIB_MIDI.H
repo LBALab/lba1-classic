@@ -1,10 +1,6 @@
-#ifdef	WATCOM9
-#pragma	library ("f:\projet\lib386\lib_midi\lb9_midi.lib");
-#else
-#pragma	library ("f:\projet\lib386\lib_midi\lib_midi.lib");
-#endif
+#include "AIL32/AIL32.H"      // Audio Interface Library API function header
 
-#include "f:\projet\lib386\lib_midi\ail32.h"      // Audio Interface Library API function header
+// timer proc for ail_lib
 
 extern	char	Midi_Driver[_MAX_PATH] ;
 extern  char	Midi_Driver_Name[80] ;
@@ -26,3 +22,4 @@ extern void WaitFadeMidi(void);
 extern void VolumeMidi(short );
 extern void SetLoopMidi(short );
 extern void DoLoopMidi(void);
+extern void InitMidiTimer(void);

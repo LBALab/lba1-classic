@@ -1,4 +1,4 @@
-#include "\projet\lib386\lib_X\lib_X.h"
+#include "lib_X\lib_X.h"
 
 #define MAX_SAMPLES_FLA 255
 #define NOM_FICHIER_DEF_CONFIGURATION "C:\\ADELINE.DEF"

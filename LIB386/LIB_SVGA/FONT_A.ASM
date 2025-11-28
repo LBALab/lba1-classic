@@ -6,12 +6,12 @@
 ;
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model SMALL, SYSCALL
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
 ALIGN 4
 
@@ -24,14 +24,14 @@ InterSpace	dd	10
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	CoulFont
-			public	NoLanguage	SetFont
-			public	NoLanguage	SizeFont
-			public	NoLanguage	CarFont
-			public	NoLanguage	Font
+			public	CoulFont
+			public	SetFont
+			public	SizeFont
+			public	CarFont
+			public	Font
 
-			extrn	NoLanguage	CoulMask	:PROC
-			extrn	NoLanguage	AffMask_Asm	:PROC
+			extrn	CoulMask	:PROC
+			extrn	AffMask_Asm	:PROC
 
 ;----------------------------------------------------------------------------
 ;'

@@ -3,19 +3,19 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model FLAT, SYSCALL
 
 				.data
 
-			include	f:\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	CopyBlock
-			public	NoLanguage	SaveBlock
-			public	NoLanguage	RestoreBlock
+			public	CopyBlock
+			public	SaveBlock
+			public	RestoreBlock
 
 ;----------------------------------------------------------------------------
 ;			CopyBlock( x0, y0, x1, y1, *src, xd, yd, *dst )

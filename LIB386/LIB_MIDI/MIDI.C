@@ -17,13 +17,17 @@
 #include <string.h>
 #include <conio.h>
 
-#include "f:\projet\lib386\lib_sys\adeline.h"
-#include "f:\projet\lib386\lib_sys\lib_sys.h"
-#include "f:\projet\lib386\lib_midi\lib_midi.h"
+#include "LIB_SYS/ADELINE.H"
+#include "LIB_SYS/LIB_SYS.H"
+#include "LIB_MIDI/LIB_MIDI.H"
 
 /***************************************************************/
 
-void	NewProc08() ;
+
+HTIMER	HandleTimer ;
+
+void	NewProc08() ; // dans timer.asm
+
 
 WORD	Midi_Driver_Enable = FALSE ;
 
@@ -459,3 +463,17 @@ void	DoLoopMidi()
 }
 
 //████████████████████████████████████████████████████████████████████████████
+
+
+void InitMidiTimer(void)
+{
+	HandleTimer = AIL_register_timer( NewProc08 ) ;
+	if ( HandleTimer == -1 )
+	{
+		printf("Error MidiDriver: Could not register AIL32 timer.\n") ;
+		InitTimer();
+		return ;
+	}
+	AIL_set_timer_frequency( HandleTimer, 50 ) ;
+	AIL_start_timer( HandleTimer ) ;
+}

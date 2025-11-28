@@ -3,12 +3,12 @@
 ;			      (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386P
-				jumps
+		
 				.model SMALL, SYSCALL
 ;----------------------------------------------------------------------------
 				.data
 ;----------------------------------------------------------------------------
-			include	\projet\lib386\lib_svga\svga.ash
+			include	LIB_SVGA/SVGA.ASH
 comment @
 		DWORD	TabOffset[]
 			Brick:
@@ -26,12 +26,12 @@ BufferClip	db	512	dup(?)
 OffsetBegin	dd	0
 NbPix		dd	0
 
-extrn		NoLanguage	Screen:DWORD
+extrn	Screen:DWORD
 
 ;----------------------------------------------------------------------------
 				.code
 
-			public	NoLanguage	CopyMask
+			public	CopyMask
 
 ;----------------------------------------------------------------------------
 CopyMask		proc	uses esi edi ebx ebp,\

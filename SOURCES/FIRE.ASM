@@ -7,12 +7,12 @@
 
 		.data
 
-		include	\projet\lib386\lib_svga\svga.ash
-		include	\projet\lib386\lib_sys\lib_sys.ash
+		include	LIB_SVGA/SVGA.ASH
+		include	LIB_SYS/LIB_SYS.ASH
 
-		public	NoLanguage      Imagen
+		public      Imagen
 
-		extrn	NoLanguage	BufSpeak:DWORD
+		extrn	BufSpeak:DWORD
 
 ;Imagen  DB 320*50 DUP (0)
 ;Imagen2 DB 320*50 DUP (0)
@@ -24,8 +24,8 @@ loopy	dw	00
 
 		.code
 
-		public	NoLanguage	DoFire
-		public	NoLanguage	ComputeFire
+		public	DoFire
+		public	ComputeFire
 
 ComputeFire	proc	uses esi edi ebx edx
 
@@ -47,21 +47,21 @@ ComputeFire	proc	uses esi edi ebx edx
 		XOR     BH,BH
 @@lp:
 		XOR     AX,AX
-		ADD     AL,-1[eSI]
+		ADD     AL,(-1)[eSI]
 		ADC     AH,BH
-		ADD     AL,-320[eSI]
+		ADD     AL,(-320)[eSI]
 		ADC     AH,BH
-		ADD     AL,-319[eSI]
+		ADD     AL,(-319)[eSI]
 		ADC     AH,BH
-		ADD     AL,-321[eSI]
+		ADD     AL,(-321)[eSI]
 		ADC     AH,BH
-		ADD     AL,1[eSI]
+		ADD     AL,(1)[eSI]
 		ADC     AH,BH
-		ADD     AL,320[eSI]
+		ADD     AL,(320)[eSI]
 		ADC     AH,BH
-		ADD     AL,319[eSI]
+		ADD     AL,(319)[eSI]
 		ADC     AH,BH
-		ADD     AL,321[eSI]
+		ADD     AL,(321)[eSI]
 		ADC     AH,BH
 		ROR     AX,3
 

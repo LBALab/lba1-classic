@@ -3,7 +3,7 @@
 ;			    (c) Adeline 1993
 ;----------------------------------------------------------------------------
 				.386p
-				jumps
+		
 				.model SMALL, SYSCALL
 ;----------------------------------------------------------------------------
 				.data
@@ -15,9 +15,9 @@ MyTab		db	768	dup(0)
 ;----------------------------------------------------------------------------
 				.code
 
-			public	 NoLanguage	Palette
-			public	 NoLanguage	PalMulti
-			public	 NoLanguage	PalOne
+			public	Palette
+			public	PalMulti
+			public	PalOne
 
 ;----------------------------------------------------------------------------
 ;		Palette( (UBYTE*)PalColor )
