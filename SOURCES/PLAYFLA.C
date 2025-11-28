@@ -485,9 +485,9 @@ void PlayAnimFla(char *name_anim)
 		return ;
 	}
 
-#ifdef	CDROM
-	StopMusicCD() ;
-#endif
+	if (CDEnable) {
+		StopMusicCD() ;
+	}
 
 	strcpy( ficname, PathFla ) ;
 	strcat( ficname, name_anim ) ;

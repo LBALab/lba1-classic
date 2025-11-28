@@ -1,4 +1,4 @@
-#include 	"C_EXTERN..H"
+#include 	"C_EXTERN.H"
 
 extern	char	*Version ;
 
@@ -7,10 +7,10 @@ extern	LONG	MaxVolume ;		// Max Music Volume if no Mixer
 extern	UWORD	GameVolumeMenu[] ;
 extern	UWORD	GameOptionMenu[] ;
 extern	LONG	FlecheForcee ;
-#ifdef	CDROM
+
 extern	LONG	FlagDisplayText ;
 extern	UBYTE	*BufMemoSeek	;
-#endif
+
 
 ULONG	SpriteMem, SampleMem, AnimMem ;
 
@@ -205,19 +205,17 @@ void	Introduction()
 {
 	// history text
 
-#ifdef	CDROM
-	StopMusicCD() ;
-//	FadeMusicMidi( 1 ) ;
-#endif
+	if (CDEnable) {
+		StopMusicCD() ;
+//		FadeMusicMidi( 1 ) ;
+	}
 
 	if( (NewCube == 0) AND (Chapitre == 0) )
 	{
-#ifdef	CDROM
 		LONG	memoflagdisplaytext ;
 
 		memoflagdisplaytext = FlagDisplayText ;
 		FlagDisplayText = TRUE ;
-#endif
 
 		Load_HQR( PATH_RESSOURCE"ress.hqr", Screen, RESS_TWINSUN_PCR ) ;
 		CopyScreen( Screen, Log ) ;
@@ -271,9 +269,7 @@ fin_intro:
 		SetBlackPal() ;
 		Cls() ;
 		Flip() ;
-#ifdef	CDROM
 		FlagDisplayText = memoflagdisplaytext ;
-#endif
 	}
 }
 
@@ -384,11 +380,15 @@ startloop:
 
 	if( FlagCredits )
 	{
-#ifdef	CDROM
-		if( GetMusicCD() != 8 )	PlayCdTrack( 8 ) ;
-#else
-		if( !IsMidiPlaying() )	PlayMidiFile( 9 ) ;
-#endif
+	if (CDEnable) {
+		if( GetMusicCD() != 8 )
+			PlayCdTrack( 8 ) ;
+	}
+	else
+	{
+		if( !IsMidiPlaying() )
+			PlayMidiFile( 9 ) ;
+	}
 		if( Key OR Joy OR Fire )
 		{
 //			FlagCredits = FALSE ;
@@ -448,9 +448,9 @@ startloop:
 			{
 				if( ListFlagGame[90] == 1 )
 				{
-#ifdef	CDROM
-					PlayCdTrack( 8 ) ;	// funkyrock
-#endif
+					if (CDEnable) {
+						PlayCdTrack( 8 ) ;	// funkyrock
+					}
 				}
 				else
 				{
@@ -517,14 +517,14 @@ startloop:
 				FlagMessageShade = FALSE ;
 				BigWinDial() ;
 				TestCoulDial( 15 ) ;
-#ifdef	CDROM
-				memoflagdisplaytext = FlagDisplayText ;
-				FlagDisplayText = TRUE ;
-#endif
+				if (CDEnable) {
+					memoflagdisplaytext = FlagDisplayText ;
+					FlagDisplayText = TRUE ;
+				}
 				Dial( 161 ) ;
-#ifdef	CDROM
-				FlagDisplayText = memoflagdisplaytext ;
-#endif
+				if (CDEnable) {
+					FlagDisplayText = memoflagdisplaytext ;
+				}
 				NormalWinDial() ;
 				FlagMessageShade = TRUE ;
 				InitDial( START_FILE_ISLAND+Island ) ;
@@ -1124,9 +1124,9 @@ void	InitProgram()
 	AsciiMode = TRUE 	;
 #endif
 
-#ifdef	CDROM
-	InitVoiceFile()	;
-#endif
+	if (CDEnable) {
+		InitVoiceFile()	;
+	}
 }
 
 /*══════════════════════════════════════════════════════════════════════════*/
@@ -1137,10 +1137,10 @@ void	TheEnd( WORD num, UBYTE *error )
 	MemoMinDosMemory = (ULONG)DosMalloc( -1, NULL ) ;// Dos memory after inits
 #endif
 
-#ifdef	CDROM
-	ClearVoiceFile()	;
-	ClearCDR() ;
-#endif
+	if (CDEnable) {
+		ClearVoiceFile()	;
+		ClearCDR() ;
+	}
 	ClearAdelineSystem() ;
 
 	printf( Version ) ;	/*	dans version.c	*/
@@ -1306,44 +1306,38 @@ void	main( int argc, UBYTE *argv[] )
 	}
 #endif
 
-// check cd rom
 
-#ifdef	DEMO
-	FlaFromCD = TRUE ;		// fla sur HD
-	strcpy( PathFla, "" ) ;		// version demo fla in current dir
-#else
-
-#ifdef	CDROM
-	if( InitCDR( "CD_LBA" ) )
+	// check cd rom
+	if (InitCDR("CD_LBA"))
 	{
-		UBYTE	*drive = "D:" ;
-
+		UBYTE *drive = "D:";
 		// cherche un fichier pour version preview
-
-		drive[0] = 'A' + DriveCDR ;
-		strcpy( PathFla, drive ) ;
-		strcat( PathFla, "\\LBA\\FLA\\" ) ;
+		drive[0] = 'A' + DriveCDR;
+		strcpy(PathFla, drive);
+		strcat(PathFla, "\\LBA\\FLA\\");
+		CDEnable = TRUE;
+		FlaFromCD = TRUE;
 	}
-	else	TheEnd(PROGRAM_OK, "No CD")	;
-
-	if ( ProgDrive[0]-'A' == DriveCDR )// A=0 , B=1 etc.
-		TheEnd(PROGRAM_OK, "Type INSTALL")	;
-
-#else
-	strcpy( PathFla, "FLA\\" ) ;	// version cdrom sur hd (fla only)
-#endif
-
-#endif
+	else 
+	{
+		strcpy(PathFla, "FLA\\"); // version cdrom sur hd (fla only)
+		FlaFromCD = TRUE;
+		CDEnable = FALSE;
+		if (Exists("FLA_GIF.HQR")) { // floppy
+			FlaFromCD = FALSE;
+		} else if (Exists("DRAGON3.FLA")) { // demo
+			strcpy(PathFla, "");
+		}
+	}
 
 // divers malloc
 
 	BufSpeak = DosMalloc( 256*1024 + 34, NULL ) ;
 	if( !BufSpeak )	TheEnd( NOT_ENOUGH_MEM, "BufSpeak (Dos Memory)" ) ;
 
-#ifdef	CDROM
 	BufMemoSeek = SmartMalloc( 2048L ) ;
 	if( !BufMemoSeek )	TheEnd( NOT_ENOUGH_MEM, "BufMemoSeek" ) ;
-#endif
+
 	BufText = SmartMalloc( 25000L ) ;
 	if( !BufText )	TheEnd( NOT_ENOUGH_MEM, "BufText" ) ;
 

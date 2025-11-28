@@ -30,21 +30,14 @@ WORD	Value ;
 LONG	SampleVolume, MusicVolume, CDVolume, LineVolume, MasterVolume ;
 
 WORD	SamplesEnable = FALSE ;
+WORD	CDEnable = FALSE;
 
 WORD	FlagPalettePcx = FALSE ;
 WORD	FlagFade = FALSE ;
 WORD	Bulle = TRUE ;
 WORD	FlagBlackPal = FALSE ;
 
-#ifdef	CDROM
 WORD	FlaFromCD = TRUE ;
-#else
-#ifdef	MAGOUILLE_FLA_HD
-WORD	FlaFromCD = TRUE ;	// magouille fla sur HD
-#else
-WORD	FlaFromCD = FALSE ;
-#endif
-#endif
 
 UBYTE	PathFla[_MAX_PATH] ;
 

@@ -15,9 +15,7 @@ extern	WORD	ZoneGrm ;
 #define	RET_WORD	1
 #define	RET_STRING	2
 
-#ifdef	CDROM
 extern	LONG	FlagDisplayText ;
-#endif
 
 /*══════════════════════════════════════════════════════════════════════════*
 		   █▀▀▀▄ █▀▀▀█       █      █    █▀▀▀▀ █▀▀▀▀
@@ -317,13 +315,11 @@ void	DoFuncLife( T_OBJET *ptrobj )
 			break ;
 
 		case LF_CDROM:
-#ifdef	CDROM
-//Message( "CDROM TRUE" ) ;
-			Value = 1 ;
-#else
-//Message( "CDROM FALSE" ) ;
-			Value = 0 ;
-#endif
+			if (CDEnable) {
+				Value = 1 ;
+			} else {
+				Value = 0 ;
+			}
 			break ;
 
 	}
@@ -693,9 +689,9 @@ void	DoLife( WORD numobj )
 				num = *PtrPrg++	;
 				if( Bulle )	DrawBulle( num ) ;
 				TestCoulDial( ListObjet[num].CoulObj ) ;
-#ifdef	CDROM
-				NumObjSpeak = num ;
-#endif
+				if (CDEnable) {
+					NumObjSpeak = num ;
+				}
 				Dial( *(WORD*)PtrPrg ) ;
 				PtrPrg += 2 ;
 				RestoreTimer() ;
@@ -709,9 +705,9 @@ void	DoLife( WORD numobj )
 				TestRestoreModeSVGA( TRUE ) ;
 				if( Bulle )	DrawBulle( numobj ) ;
 				TestCoulDial( ptrobj->CoulObj ) ;
-#ifdef	CDROM
-				NumObjSpeak = numobj ;
-#endif
+				if (CDEnable) {
+					NumObjSpeak = numobj ;
+				}
 				Dial( *(WORD*)PtrPrg ) ;
 				PtrPrg += 2 ;
 				RestoreTimer() ;
@@ -727,11 +723,11 @@ void	DoLife( WORD numobj )
 						 0, 0,
 						 obj, 1, 2 ) ;
 				PtrPrg += 2 ;
-#ifdef	CDROM
-				SaveTimer() ;
-				Speak( num )	;
-				RestoreTimer() ;
-#endif
+				if (CDEnable) {
+					SaveTimer() ;
+					Speak( num )	;
+					RestoreTimer() ;
+				}
 				break ;
 
 			case LM_SAY_MESSAGE:
@@ -741,11 +737,11 @@ void	DoLife( WORD numobj )
 						 0, 0,
 						 numobj, 1, 2 ) ;
 				PtrPrg += 2 ;
-#ifdef	CDROM
-				SaveTimer() ;
-				Speak( num )	;
-				RestoreTimer() ;
-#endif
+				if (CDEnable) {
+					SaveTimer() ;
+					Speak( num )	;
+					RestoreTimer() ;
+				}
 				break ;
 
 			case LM_SET_FLAG_CUBE:
@@ -1047,9 +1043,9 @@ void	DoLife( WORD numobj )
 				BigWinDial() ;
 				if( Bulle )	DrawBulle( numobj ) ;
 				TestCoulDial( ptrobj->CoulObj ) ;
-#ifdef	CDROM
-				NumObjSpeak = numobj ;
-#endif
+				if (CDEnable) {
+					NumObjSpeak = numobj ;
+				}
 				Dial( *(WORD*)PtrPrg ) ;
 				PtrPrg += 2 ;
 				NormalWinDial() ;
@@ -1167,10 +1163,10 @@ void	DoLife( WORD numobj )
 
 				BigWinDial() ;
 				TestCoulDial( 15 ) ;
-#ifdef	CDROM
-				memoflagdisplaytext = FlagDisplayText ;
-				FlagDisplayText = TRUE ;
-#endif
+				if (CDEnable) {
+					memoflagdisplaytext = FlagDisplayText ;
+					FlagDisplayText = TRUE ;
+				}
 				FlagMessageShade = FALSE ;
 				Dial( 6 ) ;
 				FlagMessageShade = TRUE ;
@@ -1180,9 +1176,9 @@ void	DoLife( WORD numobj )
 				Cls() ;
 				Flip();
 				Palette( PtrPal ) ;
-#ifdef	CDROM
-				FlagDisplayText = memoflagdisplaytext ;
-#endif
+				if (CDEnable) {
+					FlagDisplayText = memoflagdisplaytext ;
+				}
 				while( (Fire & F_SPACE)
 				OR (Key == K_ESC) ) ;
 				RestoreTimer() ;
@@ -1226,11 +1222,11 @@ void	DoLife( WORD numobj )
 				break ;
 
 			case LM_PLAY_CD_TRACK:
-#ifdef	CDROM
-				PlayCdTrack( *PtrPrg++ ) ;
-#else
-				PtrPrg++ ;
-#endif
+				if (CDEnable) {
+					PlayCdTrack( *PtrPrg++ ) ;
+				} else {
+					PtrPrg++ ;
+				}
 				break ;
 
 			case LM_PROJ_ISO:

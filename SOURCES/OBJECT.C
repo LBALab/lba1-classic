@@ -3364,9 +3364,9 @@ void	CheckZoneSce( T_OBJET *ptrobj, WORD numobj )
 						SaveTimer() ;
 						TestRestoreModeSVGA( TRUE ) ;
 						TestCoulDial( ptrz->Info0 ) ;
-#ifdef	CDROM
-						NumObjSpeak = NUM_PERSO ;
-#endif
+						if (CDEnable) {
+							NumObjSpeak = NUM_PERSO ;
+						}
 						Dial( ptrz->Num ) ;
 						RestoreTimer() ;
 
