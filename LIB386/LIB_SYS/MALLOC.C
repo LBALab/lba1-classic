@@ -44,29 +44,10 @@ LONG	ModeTraceMalloc = FALSE ;
 /*	Special, Allocate Memory Under First Meg			    */
 void	*DosMalloc( LONG size, ULONG *handle )
 {
-
-/*	union	REGS	r	;
-
-	r.x.eax = 0x0100	;//	Function allocate Dos Memory
-	r.x.ebx =(size+15)>>4	;//	Number off Paragraphs Requested
-	int386( 0x31, &r, &r )	;//	Invoke DPMI
-	if( r.x.cflag )
-		return(0)	;//	Failed
-	return( (void*)((r.x.eax & 0xFFFF) << 4 )) ;//	Ok, Take this!
-*/
 	union	REGS	r	;
 	ULONG	strat		;
 	ULONG	addr		;
 
-#ifdef	jhjkhjkhjlk
-	r.x.eax = 0x5800	;
-	int386( 0x21, &r, &r )	;
-	strat	= r.x.eax	;/*	Save DOS alloc strategie	*/
-
-	r.x.eax = 0x5801	;
-	r.x.ebx = 1		;/*	Low mem, best fit		*/
-	int386( 0x21, &r, &r )	;/*	Set alloc strategie		*/
-#endif
 	r.x.eax = 0x0100	;/*	Function allocate Dos Memory	*/
 	if (size == -1)
 		r.x.ebx = -1	;/*Number off Paragraphs Requested	*/
@@ -89,11 +70,6 @@ void	*DosMalloc( LONG size, ULONG *handle )
 		}
 	}
 
-#ifdef	hjhkjhlhjk
-	r.x.eax = 0x5801	;
-	r.x.ebx = strat		;/*	Odl startegie			*/
-	int386( 0x21, &r, &r )	;/*	Set alloc strategie		*/
-#endif
 	return((void *)addr)	;
 }
 
@@ -109,213 +85,50 @@ void	DosFree( ULONG handle )
 }
 
 /*──────────────────────────────────────────────────────────────────────────*/
-
-#ifdef	DEBUG_MALLOC
-
-LONG	mymalloc( LONG lenalloc, void **memptr )
-{
-	union REGS regs		;
-	struct SREGS sregs	;
-	UBYTE	*ptr		;
-
-	lenalloc+=16;
-	regs.x.eax = 0x00000501		;
-	regs.x.ebx = lenalloc>>16 ;
-	regs.x.ecx = lenalloc & 0xFFFF ;
-	sregs.es = 0		;
-	sregs.ds = 0		;
-	sregs.fs = 0		;
-	sregs.gs = 0		;
-	int386x( DPMI_INT, &regs, &regs, &sregs )	;
-
-	if( regs.x.cflag )
-	{
-		*memptr = NULL ;
-		return regs.x.eax ;
-	}
-
-	ptr=(UBYTE *)((regs.x.ebx<<16) | (regs.x.ecx & 0xFFFF));
-
-	*(WORD*)(ptr+0)=(WORD)regs.x.esi ;
-	*(WORD*)(ptr+2)=(WORD)regs.x.edi ;
-
-	*memptr=(void*)(ptr+16) ;
-	return 0 ;
-}
-
-/*──────────────────────────────────────────────────────────────────────────*/
-
-LONG	myfree( void *ptr )
-{
-	union REGS regs		;
-	struct SREGS sregs	;
-	UBYTE	*ptrh ;
-
-	ptrh = ptr ;
-	ptrh -= 16 ;
-
-	regs.x.esi = *(WORD*)(ptrh+0) ;
-	regs.x.edi = *(WORD*)(ptrh+2) ;
-	regs.x.eax = 0x00000502		;
-	sregs.es = 0		;
-	sregs.ds = 0		;
-	sregs.fs = 0		;
-	sregs.gs = 0		;
-	int386x( DPMI_INT, &regs, &regs, &sregs )	;
-
-	return regs.x.cflag ? regs.x.eax : 0 ;
-}
-
-#endif
-
-/*──────────────────────────────────────────────────────────────────────────*/
 void	*SmartMalloc( LONG lenalloc )
 {
-	union	REGS	r	;
-	ULONG	strat		;
-	ULONG	addr		;
+	void *ptr;
 
-#ifdef	jhghhlk
-	r.x.eax = 0x5800	;
-	int386( 0x21, &r, &r )	;
-	strat	= r.x.eax	;/*	Save DOS alloc strategie	*/
+	if (lenalloc == -1)
+	{
+		return 0; /* Query memory not supported */
+	}
 
-	r.x.eax = 0x5801	;
-	r.x.ebx = 0x81		;/*	UMB first then Low mem, best fit*/
-	int386( 0x21, &r, &r )	;/*	Set alloc strategie		*/
-#endif
-	r.x.eax = 0x0100	;/*	Function allocate Dos Memory	*/
-	r.x.ebx =(lenalloc+15)>>4;/*Number off Paragraphs Requested	*/
-	int386( 0x31, &r, &r )	;/*	Invoke DPMI			*/
+	ptr = malloc(lenalloc);
 
-	if( !r.x.cflag )
-		addr = (r.x.eax & 0xFFFF) << 4;/*	Ok, Take this!	*/
-	else
-		addr = (ULONG)malloc( lenalloc );
-#ifdef	hjgkgjk
-	r.x.eax = 0x5801	;
-	r.x.ebx = strat		;/*	Odl startegie			*/
-	int386( 0x21, &r, &r )	;/*	Set alloc strategie		*/
-#endif
-	return((void *)addr)	;
+	if (ptr == NULL)
+	{
+		printf("ERROR: MemoryNotAlloc (Malloc): Size = %d\n", lenalloc);
+	}
+
+	return ptr;
 }
 
 /*──────────────────────────────────────────────────────────────────────────*/
 void	*Malloc( LONG lenalloc )
 {
-	union REGS regs		;
-	struct SREGS sregs	;
-	void	*ptr ;
-	FILE	*fh ;
-	ULONG	size, error ;
+	void *ptr;
 
-	if ( lenalloc != -1 )
+	if (lenalloc == -1)
 	{
-#ifdef	DEBUG_MALLOC
-		if( ModeTraceMalloc )
-		{
-			fh = fopen( "c:\\malloc.lst","a+t" ) ;
-			if( fh != NULL )
-			{
-				regs.x.eax = 0x00000500		;
-				sregs.es = FP_SEG( &MemInfo )	;
-				sregs.ds = 0		;
-				regs.x.edi = FP_OFF( &MemInfo )	;
-				int386x( DPMI_INT, &regs, &regs, &sregs )	;
-				size = MemInfo.LargestBlockAvail ;
-
-				fprintf( fh, "Mem: %d\n", size ) ;
-			}
-
-			error = mymalloc(lenalloc, &ptr) ;
-//			ptr = malloc( lenalloc ) ;
-
-			if( fh != NULL )
-			{
-				fprintf( fh, "Malloc: %d bytes at %X to %X\n", lenalloc, ptr, (LONG)ptr+lenalloc ) ;
-				if( error )
-					fprintf( fh, "Error: %X\n", error ) ;
-
-				regs.x.eax = 0x00000500		;
-				sregs.es = FP_SEG( &MemInfo )	;
-				sregs.ds = 0		;
-				regs.x.edi = FP_OFF( &MemInfo )	;
-				int386x( DPMI_INT, &regs, &regs, &sregs )	;
-				size = MemInfo.LargestBlockAvail ;
-
-				fprintf( fh, "Mem: %d\n", size ) ;
-
-				fclose( fh ) ;
-			}
-		}
-		else
-#endif
-		{
-			ptr = malloc( lenalloc ) ;
-		}
-
-		return( ptr )	;
-
+		return 0; /* Query memory not supported */
 	}
-	regs.x.eax = 0x00000500		;
-	sregs.es = FP_SEG( &MemInfo )	;
-	sregs.ds = 0		;
-	regs.x.edi = FP_OFF( &MemInfo )	;
 
-	int386x( DPMI_INT, &regs, &regs, &sregs )	;
+	ptr = malloc(lenalloc);
 
-	return( (void *)MemInfo.LargestBlockAvail )	;
+	if (ptr == NULL)
+	{
+		printf("ERROR: MemoryNotAlloc (Malloc): Size = %d\n", lenalloc);
+	}
+
+	return ptr;
 }
 /*──────────────────────────────────────────────────────────────────────────*/
 void	Free( void *buffer )
 {
-	union REGS regs		;
-	struct SREGS sregs	;
-	void	*ptr ;
-	FILE	*fh ;
-	ULONG	size, error ;
-
-#ifdef	DEBUG_MALLOC
-	if( ModeTraceMalloc )
+	if (buffer != NULL)
 	{
-		fh = fopen( "c:\\malloc.lst","a+t" ) ;
-		if( fh != NULL )
-		{
-			regs.x.eax = 0x00000500		;
-			sregs.es = FP_SEG( &MemInfo )	;
-			sregs.ds = 0		;
-			regs.x.edi = FP_OFF( &MemInfo )	;
-			int386x( DPMI_INT, &regs, &regs, &sregs )	;
-			size = MemInfo.LargestBlockAvail ;
-
-			fprintf( fh, "Mem: %d\n", size ) ;
-		}
-
-		error = myfree( buffer ) ;
-//		free( buffer ) ;
-
-		if( fh != NULL )
-		{
-			fprintf( fh, "Free: %X\n", buffer ) ;
-			if( error )
-				fprintf( fh, "Error: %X\n", error ) ;
-
-			regs.x.eax = 0x00000500		;
-			sregs.es = FP_SEG( &MemInfo )	;
-			sregs.ds = 0		;
-			regs.x.edi = FP_OFF( &MemInfo )	;
-			int386x( DPMI_INT, &regs, &regs, &sregs )	;
-			size = MemInfo.LargestBlockAvail ;
-
-			fprintf( fh, "Mem: %d\n", size ) ;
-
-			fclose( fh ) ;
-		}
-	}
-	else
-#endif
-	{
-		free( buffer ) ;
+		free(buffer);
 	}
 }
 /*──────────────────────────────────────────────────────────────────────────*/
