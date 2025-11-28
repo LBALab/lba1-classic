@@ -1298,8 +1298,12 @@ void	main( int argc, UBYTE *argv[] )
 	AdelineLogo() ;
 
 // pause logo
-	memotimer = TimerRef ;
-	while( TimerRef < (memotimer+50*4) ) ;
+	memotimer = TimerRef;
+	while (TimerRef < (memotimer + 50 * 4))
+	{
+		if (Key OR Fire OR Joy)
+			break;
+	}
 #endif
 
 // check cd rom

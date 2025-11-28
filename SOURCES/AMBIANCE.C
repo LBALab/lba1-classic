@@ -269,14 +269,14 @@ void	FadeToBlack( UBYTE *ptrpal )
 
 void	WhiteFade()
 {
-	UBYTE	workpal[768] ;
-	LONG	n,m ;
+	UBYTE workpal[768];
+	LONG n, m;
 
-	for( n=0; n<=255; n++ )
+	for (n = 0; n <= 255; n+=4)
 	{
-		memset( workpal, n, 768 ) ;
-		Vsync() ;
-		Palette( workpal ) ;
+		memset(workpal, n, 768);
+		Vsync();
+		Palette(workpal);
 	}
 }
 
