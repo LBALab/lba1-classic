@@ -193,8 +193,8 @@ static	LONG	FlagKeepVoice=0		;
 	LONG	FlagDisplayText=1	;//	ON par default
 static  LONG    FlagNextVoc=FALSE	;
 ULONG   *BufMemoSeek=0  		;
-static  ULONG   FdNar=0         	;
-static	ULONG	FdCd=0			;
+static  FILE*   FdNar=0         	;
+static	FILE*	FdCd=0			;
 typedef	struct
 {
 	char	NameHD[13+sizeof(PATH_NAR_HD)]	;
@@ -457,7 +457,7 @@ void	DeleteOlderFileHD()
 //	Copy File CD On HD ( filename for CD must don't contain drive !!!)
 LONG	CopyFileCD_HD( char *filecd, char *filehd )
 {
-	ULONG	fd	;
+	FILE*	fd	;
 	LONG	size, wr;
 	LONG	i, sect	;
 	char	fname[256];
@@ -649,7 +649,7 @@ void    InitSpeak( LONG file )
 	}
 }
 /*-------------------------------------------------------------------------*/
-void    PlaySpeakVoc(LONG fd)
+void    PlaySpeakVoc(FILE* fd)
 {
 	LONG    size    ;
 	LONG    sizelzss;
@@ -698,7 +698,7 @@ void    PlaySpeakVoc(LONG fd)
 
 }
 /*-------------------------------------------------------------------------*/
-LONG	TestSpk( LONG fd )
+LONG	TestSpk( FILE* fd )
 {
 	if ( !FlagSpeak )	return(0)	;//     Le joueur ne veut pas
 	if ( !fd )		return(0)	;//     Le programme ne peut pas

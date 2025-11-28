@@ -15,8 +15,6 @@
 			- AddExt
 */
 
-#include <i86.h>
-#include <dos.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
@@ -24,103 +22,96 @@
 #include "ADELINE.H"
 #include "LIB_SYS.H"
 
-
 /*--------------------------------------------------------------------------*/
-LONG	OpenRead( char *name )
+FILE *OpenRead(char *name)
 {
-	int	handle	;
-
-	if ( _dos_open( name, O_RDONLY, &handle ))	handle = 0	;
-	return(handle)	;
-
+	FILE *fp;
+	fp = fopen(name, "rb");
+	return fp;
 }
 /*--------------------------------------------------------------------------*/
-LONG	OpenWrite( char *name )
+FILE *OpenWrite(char *name)
 {
-	int	handle	;
-
-	if ( _dos_creat( name, _A_NORMAL, &handle ))	handle = 0	;
-	return(handle)	;
-
+	FILE *fp;
+	fp = fopen(name, "wb");
+	return fp;
 }
 /*--------------------------------------------------------------------------*/
-LONG	OpenReadWrite( char *name )
+FILE *OpenReadWrite(char *name)
 {
-	int	handle	;
-
-	if ( _dos_open( name, O_RDWR, &handle ))	handle = 0	;
-	return(handle)	;
-
+	FILE *fp;
+	fp = fopen(name, "rb+");
+	return fp;
 }
 /*--------------------------------------------------------------------------*/
-ULONG	Read( LONG handle, void *buffer, ULONG lenread  )
+ULONG Read(FILE *handle, void *buffer, ULONG lenread)
 {
-	ULONG	howmuch	;
+	ULONG howmuch;
 
-	if ( lenread == 0xFFFFFFFFL )	/*	-1L	*/
-		lenread = 16000000L	;/* Ca Accelere !! 	*/
-	_dos_read( handle, buffer, lenread, (unsigned int *)&howmuch )	;
-	return( howmuch )	;
+	if (lenread == 0xFFFFFFFFL) /*	-1L	*/
+		lenread = 16000000L;	/* Ca Accelere !! 	*/
+	howmuch = fread(buffer, lenread, 1, handle);
+	return (howmuch);
 }
 /*--------------------------------------------------------------------------*/
-ULONG	Write( LONG handle, void *buffer, ULONG lenwrite )
+ULONG Write(FILE *handle, void *buffer, ULONG lenwrite)
 {
-	ULONG	howmuch	;
-
-	_dos_write( handle, buffer, lenwrite, (unsigned int *)&howmuch )	;
-	return( howmuch )	;
+	ULONG howmuch;
+	howmuch = fwrite(buffer, lenwrite, 1, handle);
+	return (howmuch);
 }
 /*--------------------------------------------------------------------------*/
-void	Close( LONG handle )
+void Close(FILE *handle)
 {
-	_dos_close( handle )	;
+	fclose(handle);
 }
 /*--------------------------------------------------------------------------*/
-LONG	Seek( LONG handle, LONG position, LONG mode )
+LONG Seek(FILE *handle, LONG position, LONG mode)
 {
-	return(lseek( handle, position, mode ))	;
+	return (fseek(handle, position, mode));
 }
 /*--------------------------------------------------------------------------*/
-LONG	Delete( char *name )
+LONG Delete(char *name)
 {
-	if ( remove( name ))	return(0)	;
-	return(1)				;
+	if (remove(name))
+		return (0);
+	return (1);
 }
 /*--------------------------------------------------------------------------*/
-ULONG	FileSize( char *name )
+ULONG FileSize(char *name)
 {
-	int	handle	;
-	ULONG	fsize	;
+	FILE *handle;
+	ULONG fsize;
 
-	handle = OpenRead( name )	;
-	if ( handle == 0 ) return(0)	;
+	handle = OpenRead(name);
+	if (handle == 0)
+		return (0);
 
-	fsize = Seek( handle, 0, SEEK_END );
+	fseek(handle, 0L, SEEK_END);
+	fsize = ftell(handle);
 
-	Close( handle )	;
-	return( fsize )	;
+	Close(handle);
+	return (fsize);
 }
 /*-------------------------------------------------------------------------*/
-void	AddExt( char *path, char *ext )
+void AddExt(char *path, char *ext)
 {
-//	Version Loran
+	//	Version Loran
 
+	/*
+		char	*pt	;
+		pt = path	;
+		while(( *pt != '.' ) AND ( *pt != 0 ))	pt++	;
+		*pt = 0		;
+		strcat( path, ext )	;
+	*/
 
-/*
-	char	*pt	;
-	pt = path	;
-	while(( *pt != '.' ) AND ( *pt != 0 ))	pt++	;
-	*pt = 0		;
-	strcat( path, ext )	;
-*/
+	char drive[_MAX_DRIVE];
+	char dir[_MAX_DIR];
+	char name[_MAX_FNAME];
+	char oldext[_MAX_EXT];
 
-
-	char	drive[_MAX_DRIVE] ;
-	char	dir[_MAX_DIR] ;
-	char	name[_MAX_FNAME] ;
-	char	oldext[_MAX_EXT] ;
-
-	_splitpath( path, drive, dir, name, oldext ) ;
+	_splitpath(path, drive, dir, name, oldext);
 
 	// makepath rajoute le point si necessaire
 
@@ -129,56 +120,69 @@ void	AddExt( char *path, char *ext )
 	// strcpy(oldext+1, ext);
 	// _makepath( path, drive, dir, name, oldext ) ;
 
-
-	_makepath( path, drive, dir, name, ext ) ;
+	_makepath(path, drive, dir, name, ext);
 }
 /*--------------------------------------------------------------------------*/
-LONG	Copy( UBYTE *sname, UBYTE *dname )
+LONG Copy(UBYTE *sname, UBYTE *dname)
 {
-	ULONG	n, size ;
-	LONG	shandle ;
-	LONG	dhandle ;
-	UBYTE	c ;
+	ULONG n, size;
+	FILE *shandle;
+	FILE *dhandle;
+	UBYTE c;
 
-	size = FileSize( sname ) ;
-	if( !size )	return 0L ;
+	size = FileSize(sname);
+	if (!size)
+		return 0L;
 
-	shandle = OpenRead( sname ) ;
-	if( !shandle )	return 0L ;
+	shandle = OpenRead(sname);
+	if (!shandle)
+		return 0L;
 
-	dhandle = OpenWrite( dname ) ;
-	if( !dhandle )
+	dhandle = OpenWrite(dname);
+	if (!dhandle)
 	{
-		Close( shandle ) ;
-		return 0L ;
+		Close(shandle);
+		return 0L;
 	}
 
-	for( n=0; n<size; n++ )
+	for (n = 0; n < size; n++)
 	{
-		Read( shandle, &c, 1L ) ;
-		if( Write( dhandle, &c, 1L ) != 1L )
+		Read(shandle, &c, 1L);
+		if (Write(dhandle, &c, 1L) != 1L)
 		{
-			Close( shandle ) ;
-			Close( dhandle ) ;
-			return 0L ;
+			Close(shandle);
+			Close(dhandle);
+			return 0L;
 		}
 	}
 
-	Close( shandle ) ;
-	Close( dhandle ) ;
+	Close(shandle);
+	Close(dhandle);
 
-	return 1L ;
+	return 1L;
 }
 /*--------------------------------------------------------------------------*/
 
-LONG	CopyBak( UBYTE *name )
+LONG CopyBak(UBYTE *name)
 {
-	UBYTE	string[256] ;
+	UBYTE string[256];
 
-	strcpy( string, name ) ;
-	AddExt( string, ".BAK" ) ;
-	return Copy( name, string ) ;
+	strcpy(string, name);
+	AddExt(string, ".BAK");
+	return Copy(name, string);
 }
 
-
 /*--------------------------------------------------------------------------*/
+
+LONG Exists(UBYTE *name)
+{
+	FILE *handle;
+
+	handle = OpenRead(name);
+	if (handle)
+	{
+		Close(handle);
+		return 1L;
+	}
+	return 0L;
+}
