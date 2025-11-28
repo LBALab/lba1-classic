@@ -36,7 +36,7 @@ set(LBA_ASM_TO_C_MODULES
 set(LBA_CONVERTED_C_SOURCES)
 set(LBA_ORIGINAL_ASM_SOURCES)
 foreach(module ${LBA_ASM_TO_C_MODULES})
-    #list(APPEND LBA_CONVERTED_C_SOURCES "${module}.C")
+    list(APPEND LBA_CONVERTED_C_SOURCES "${module}.C")
     list(APPEND LBA_ORIGINAL_ASM_SOURCES "${module}.ASM")
 endforeach()
 
