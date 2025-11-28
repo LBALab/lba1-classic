@@ -122,7 +122,7 @@ if(BUILD_DOS_C)
     endforeach()
 
     #target_compile_definitions(LBADC PRIVATE SKIP_INTRO)
-    #target_compile_definitions(LBADC PRIVATE CDROM)
+    target_compile_definitions(LBADC PRIVATE CDROM)
 
     lba_configure_dos_executable(LBADC "LBADC" "${COMMON_LIBRARIES_TRANSLATED}")
     message(STATUS "DOS executable: LBADC.EXE (translated C modules, DOS/4GW 32-bit protected mode)")

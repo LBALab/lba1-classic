@@ -16,7 +16,7 @@ foreach(src ${LIB_MIDI_SOURCES})
     if(ext STREQUAL ".C")
         set_source_files_properties(${src} PROPERTIES LANGUAGE C)
     elseif(ext STREQUAL ".ASM")
-        set_source_files_properties(${src} PROPERTIES LANGUAGE ASM_MASM)
+        set_source_files_properties(${src} PROPERTIES LANGUAGE ASM_MASM COMPILE_FLAGS "-Cp -DDPMI")
     endif()
 endforeach()
 

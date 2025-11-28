@@ -6,10 +6,11 @@
 #include "LIB_SYS/ADELINE.H"
 #include "LIB_SYS/LIB_SYS.H"
 #include "LIB_SAMP/LIB_WAVE.H"
+
 #include	<stdlib.h>
 #include	<stdio.h>
-#include	<dos.h>
-#include	<i86.h>
+// #include	<dos.h>
+// #include	<i86.h>
 
 char	*WaveError = "Error WaveDriver:";
 
@@ -58,8 +59,8 @@ LONG	WaveInitDLL(char *driverpathname)
 /*-------------------------------------------------------------------------*/
 ULONG	InitWave()
 {
-	union	REGS	r;
-	struct	SREGS	sr;
+	// union	REGS	r;
+	// struct	SREGS	sr;
 	void 	far	*fh;
 	int		i;
 	int	IRQ_number;
@@ -111,8 +112,8 @@ ULONG	InitWave()
 
 void	ClearWave()
 {
-	union	REGS	r;
-	struct	SREGS	sr;
+	// union	REGS	r;
+	// struct	SREGS	sr;
 
 	if (!Wave_Driver_Enable)
 		return;
