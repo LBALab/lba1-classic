@@ -650,6 +650,68 @@ startloop:
 			AffScene(TRUE) ;
 		}
 
+		if (MyKey == K_1) // balle magique
+		{
+			if (ListFlagGame[FLAG_BALLE_MAGIQUE])
+			{
+				if (Weapon == 1)
+				{
+					InitBody(GEN_BODY_NORMAL, NUM_PERSO);
+				}
+				Weapon = 0;
+			}
+		}
+
+		if (MyKey == K_2) // sabre magique
+		{
+			if (ListFlagGame[FLAG_SABRE_MAGIQUE])
+			{
+				if (ListObjet[NUM_PERSO].GenBody != GEN_BODY_SABRE)
+				{
+					if (Comportement == C_PROTOPACK)
+					{
+						SetComportement(C_NORMAL);
+					}
+					// anim degaine sabre
+					InitBody(GEN_BODY_SABRE, NUM_PERSO);
+					InitAnim(GEN_ANIM_DEGAINE, ANIM_THEN, GEN_ANIM_RIEN, NUM_PERSO);
+				}
+				Weapon = 1;
+			}
+		}
+
+		if (MyKey == K_3) // trompe select inventory
+		{
+			if (ListFlagGame[FLAG_TROMPE])
+			{
+				InventoryAction = FLAG_TROMPE;
+			}
+		}
+
+		if (MyKey == K_4 || MyKey == K_J) // protopack
+		{
+			if (ListFlagGame[FLAG_PROTOPACK])
+			{
+				if (ListFlagGame[FLAG_MEDAILLON])
+				{
+					ListObjet[NUM_PERSO].GenBody = GEN_BODY_NORMAL; // avec médaillon
+				}
+				else
+				{
+					ListObjet[NUM_PERSO].GenBody = GEN_BODY_TUNIQUE; // sans médaillon
+				}
+				if (Comportement == C_PROTOPACK)
+				{
+					SetComportement(C_NORMAL);
+				}
+				else
+				{
+					SetComportement(C_PROTOPACK);
+				}
+				Weapon = 0; // balle magique
+			}
+		}
+
 		if( MyFire & F_RETURN )	/* recentre sur perso */
 		{
 			if( !CameraZone ) /* si pas camera forcée */
